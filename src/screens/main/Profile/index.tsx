@@ -43,7 +43,7 @@ const Profile = () => {
   if (loading) {
     return (
       <View style={styles.center}>
-        <ActivityIndicator color={Colors.PRIMARY} size='large' />
+        <ActivityIndicator color={Colors.PRIMARY_COLOR} size='large' />
         <Typography color={Colors.TEXT_GRAY}>Loading bookings...</Typography>
       </View>
     )
@@ -59,7 +59,7 @@ const Profile = () => {
         <RefreshControl
           refreshing={refreshing}
           onRefresh={() => loadBookings(true)}
-          tintColor={Colors.PRIMARY}
+          tintColor={Colors.PRIMARY_COLOR}
         />
       }
       ListHeaderComponent={
