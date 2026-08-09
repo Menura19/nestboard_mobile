@@ -86,7 +86,7 @@ const RoomCard = ({ room, price }: Props) => {
                 borderRadius: 100,
                 borderColor:
                   selectedSeat === seat.seatIndex
-                    ? Colors.PRIMARY
+                    ? Colors.PRIMARY_COLOR
                     : Colors.BORDER_GRAY,
                 borderStyle: 'dashed',
                 borderWidth: 1.6,
@@ -97,7 +97,7 @@ const RoomCard = ({ room, price }: Props) => {
               }}
             >
               {selectedSeat === seat.seatIndex ? (
-                <Typography variant='button' color={Colors.PRIMARY}>
+                <Typography variant='button' color={Colors.PRIMARY_COLOR}>
                   {seat.seatIndex}
                 </Typography>
               ) : (
