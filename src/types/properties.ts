@@ -20,8 +20,9 @@ export type PropertyItem = {
   price: string;
   rating: number;
   image: string;
-  lat: number;
-  lng: number;
+  lat?: number;
+  lng?: number;
+  isFavorite?: boolean;
 }
 
 export interface Room {
@@ -43,16 +44,17 @@ export interface Property {
   city: string;
   type: "APARTMENT" | "HOUSE" | "VILLA" | "HOTEL" | string;
   rating: string;
+  isFavorite?: boolean;
   amenities: string[];
   latitude: number;
   longitude: number;
   imageUrl: string;
   minStay: string;
+  cost?: string;
+  available_seats?: number;
   isActive: boolean;
   createdAt: string;
 }
-
-// export type PropertyTypes = Property["type"];
 
 export interface RoomType {
   id: string,
