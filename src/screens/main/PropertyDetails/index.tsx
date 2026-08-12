@@ -35,6 +35,7 @@ const PropertyDetails = () => {
       {
         currentProperty ?
           <PropertyDetailsScreen
+            propertyId={route.params.pid}
             title={currentProperty.title}
             address={currentProperty.address}
             badges={[...currentProperty.amenities]}
