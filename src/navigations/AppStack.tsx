@@ -1,4 +1,4 @@
-import React from 'react'
+﻿import React from 'react'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import Home from '../screens/main/Home'
 import PropertyDetails from '../screens/main/PropertyDetails'
@@ -7,6 +7,7 @@ import TabScreens from './TabNavigation/TabScreens'
 import RoomTypeDetails from '../screens/main/RoomList'
 import ConfirmBooking from '../screens/main/ConfirmBooking'
 import QrScan from '../screens/main/QrScan'
+import Notifications from '../screens/main/Notifications'
 
 const Stack = createNativeStackNavigator()
 
@@ -28,6 +29,7 @@ const AppStack = () => {
         headerShown: false,
         headerTransparent: true
       }} />
+      <Stack.Screen name='Notifications' component={Notifications} />
       <Stack.Screen name='QrScan' component={QrScan} options={{
         headerShown: false,
         headerTransparent: true

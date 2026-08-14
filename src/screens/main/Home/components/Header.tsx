@@ -1,20 +1,26 @@
-import { View, Text, TouchableOpacity, StyleSheet, Button } from 'react-native'
-import React from 'react'
+﻿import { View, Text, TouchableOpacity, StyleSheet, Button } from 'react-native'
+import React, { useCallback, useState } from 'react'
 import { Bell, QrCode } from 'lucide-react-native'
 import { Colors } from '../../../../constant/colors'
 import RoundButton from '../../../../components/ui/RoundButton'
-import { useNavigation } from '@react-navigation/native'
-import { useDispatch } from 'react-redux'
-import { logout } from '../../../../store/authSlice'
-import { removeRefreshToken } from '../../../../util/localStorage'
+import { useFocusEffect, useNavigation } from '@react-navigation/native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
+import { NotificationAPI } from '../../../../api/notifications'
 
 const Header = () => {
 
   const nav: any = useNavigation();
-  const dispatch = useDispatch();
 
   const insets = useSafeAreaInsets();
+  const [hasUnread, setHasUnread] = useState(false);
+
+  useFocusEffect(
+    useCallback(() => {
+      NotificationAPI.list()
+        .then(result => setHasUnread(result.unreadCount > 0))
+        .catch(() => setHasUnread(false));
+    }, [])
+  );
 
   return (
     <View style={[styles.container, {
@@ -39,10 +45,9 @@ const Header = () => {
         />
         <RoundButton
           Icon={<Bell color={Colors.SECONDARY_COLOR} size={20} />}
-          orangeIndicator
+          orangeIndicator={hasUnread}
           onPress={() => {
-            dispatch(logout())
-            removeRefreshToken();
+            nav.navigate('Notifications')
           }}
         />
       </View>
