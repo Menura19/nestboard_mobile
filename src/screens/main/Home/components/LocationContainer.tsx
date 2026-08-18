@@ -3,8 +3,7 @@ import { Image, StyleSheet, Text, View } from 'react-native'
 import { useFocusEffect } from '@react-navigation/native'
 import { Colors } from '../../../../constant/colors'
 import { ProfileAPI, type UserProfile } from '../../../../api/profile'
-
-const API_URL = 'http://10.0.2.2:3001'
+import { API_ORIGIN } from '../../../../config/environment'
 
 const LocationContainer = () => {
   const [profile, setProfile] = useState<UserProfile | null>(null)
@@ -41,7 +40,7 @@ const LocationContainer = () => {
   const avatarUrl = profile?.avatarUrl
     ? profile.avatarUrl.startsWith('http')
       ? profile.avatarUrl
-      : `${API_URL}${profile.avatarUrl}`
+      : `${API_ORIGIN}${profile.avatarUrl}`
     : null
 
   return (

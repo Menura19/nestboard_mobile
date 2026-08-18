@@ -78,11 +78,11 @@ const ConfirmBooking = () => {
         ]
       )
     } catch (error: any) {
-      const message =
-        error?.response?.data?.message ||
-        error?.response?.data?.error ||
-        'The booking could not be completed. Please try again.'
-      Alert.alert('Booking failed', message)
+      console.error('BOOKING_API_ERROR', JSON.stringify(error?.response?.data ?? error?.message ?? error))
+      Alert.alert(
+        'Booking failed',
+        'The booking could not be completed. Please check the selected seat and lease period and try again.'
+      )
     } finally {
       setBooking(false)
     }

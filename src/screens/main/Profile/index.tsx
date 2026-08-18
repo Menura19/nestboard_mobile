@@ -13,6 +13,7 @@ import { useFocusEffect } from '@react-navigation/native'
 import { launchImageLibrary } from 'react-native-image-picker'
 import { BookingAPI, MobileBooking } from '../../../api/bookings'
 import { ProfileAPI, UserProfile } from '../../../api/profile'
+import { API_ORIGIN } from '../../../config/environment'
 import Typography from '../../../components/ui/Typography'
 import { Colors } from '../../../constant/colors'
 
@@ -31,7 +32,7 @@ function imageUri(url: string | null | undefined) {
   if (!url) return null
 
   if (url.startsWith('/uploads/')) {
-    return `http://10.0.2.2:3001${url}`
+    return `${API_ORIGIN}${url}`
   }
 
   return url
@@ -346,8 +347,8 @@ const Profile = () => {
               </View>
 
               <Typography color={Colors.TEXT_GRAY}>
-                {item.room?.roomType?.name || 'Room'} ·{' '}
-                {item.room?.roomLabel || 'Assigned room'} · Seat{' '}
+                {item.room?.roomType?.name || 'Room'} Â·{' '}
+                {item.room?.roomLabel || 'Assigned room'} Â· Seat{' '}
                 {item.seatNumber}
               </Typography>
 
