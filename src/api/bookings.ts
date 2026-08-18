@@ -1,23 +1,47 @@
-import { Property, PropertyItem, PropertyListResponse, RoomType } from "../types/properties";
 import { apiClient } from "./apiClient"
+
+export type MobileBooking = {
+  id: string
+  seatNumber: number
+  leaseStart: string
+  leaseEnd: string
+  durationMonths: number
+  totalAmount: string | number
+  paymentStatus: string
+  bookingStatus: string
+  room?: {
+    roomLabel?: string
+    roomType?: {
+      name?: string
+      property?: {
+        id?: string
+        title?: string
+        address?: string
+        city?: string
+        imageUrl?: string
+      }
+    }
+  }
+}
 
 export const BookingAPI = {
   bookProperty: async (
     roomId: string,
-    seatIndex: number,
-    date: string,
-    period: number,
-    total: string
+    seatNumber: number,
+    startMonth: string,
+    durationMonths: number
   ) => {
-    //properties?page=1&limit=4&abc=xyz
-
-    await apiClient.put<PropertyListResponse>('bookings', {
+    const response = await apiClient.put<MobileBooking>("bookings", {
       roomId,
-      seatIndex,
-      date,
-      period,
-      total: parseFloat(total)
+      seatNumber,
+      startMonth,
+      durationMonths,
     })
-    // return d.data;
-  }
+    return response.data
+  },
+
+  getMyBookings: async () => {
+    const response = await apiClient.get<MobileBooking[]>("bookings/my")
+    return response.data
+  },
 }

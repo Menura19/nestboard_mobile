@@ -53,9 +53,7 @@ export default function LoginScreen() {
 
       //Save the refresh token inside the device storage
       persistLogin(data.refreshToken)
-      nav.navigate("Home")
-
-    } catch (err: any) {
+} catch (err: any) {
       if (err.response?.status === 401) {
         setError('Invalid email or password');
       } else {

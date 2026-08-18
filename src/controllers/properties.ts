@@ -1,21 +1,24 @@
 import { useEffect, useState } from "react"
-import { propertyAPI } from "../api/properties"
-import { Property } from "../types/properties"
+import { PropertyAPI } from "../api/properties"
+import { PropertyItem } from "../types/properties"
 
 export const useGetProperties = () => {
-
-  const [properties, setProperties] = useState<Property[]>([]);
-  const [page, setPage] = useState(1);
+  const [properties, setProperties] = useState<PropertyItem[]>([])
+  const [page] = useState(1)
 
   useEffect(() => {
-    propertyAPI.getAllProperties(page).then(data => {
-      console.log("properties ", data)
-      setProperties([...properties, ...data.data])
-    });
-  }, [])
+    PropertyAPI.getAllProperties(
+      page,
+      10,
+      "All",
+      { min: 0, max: 0 },
+      []
+    ).then((data) => {
+      setProperties((current) => [...current, ...data.data])
+    })
+  }, [page])
 
   return {
-    properties
+    properties,
   }
-
 }

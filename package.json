@@ -3,10 +3,10 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "android": "react-native run-android --list-devices",
+    "android": "rnc-cli run-android --main-activity MainActivity --active-arch-only",
     "ios": "react-native run-ios",
     "lint": "eslint .",
-    "start": "react-native start",
+    "start": "rnc-cli start",
     "test": "jest"
   },
   "dependencies": {
@@ -28,6 +28,7 @@
     "react-native": "0.85.3",
     "react-native-gesture-handler": "^3.0.2",
     "react-native-get-location": "^6.0.1",
+    "react-native-image-picker": "^8.2.1",
     "react-native-keyboard-aware-scroll-view": "^0.9.5",
     "react-native-linear-gradient": "^2.8.3",
     "react-native-maps": "^1.29.0",
@@ -43,9 +44,9 @@
     "@babel/core": "^7.25.2",
     "@babel/preset-env": "^7.25.3",
     "@babel/runtime": "^7.25.0",
-    "@react-native-community/cli": "20.1.0",
-    "@react-native-community/cli-platform-android": "20.1.0",
-    "@react-native-community/cli-platform-ios": "20.1.0",
+    "@react-native-community/cli": "^20.1.0",
+    "@react-native-community/cli-platform-android": "^20.1.0",
+    "@react-native-community/cli-platform-ios": "^20.1.0",
     "@react-native/babel-preset": "0.85.3",
     "@react-native/eslint-config": "0.85.3",
     "@react-native/jest-preset": "0.85.3",

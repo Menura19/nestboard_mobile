@@ -1,5 +1,6 @@
 import { View, Text } from 'react-native'
-import React, { useCallback, useEffect, useRef, useState } from 'react'
+import React, { useCallback, useRef, useState } from 'react'
+import { useFocusEffect } from '@react-navigation/native'
 import { styles } from './styles'
 import LocationContainer from './components/LocationContainer'
 import SearchContainer from './components/SearchContainer'
@@ -11,52 +12,54 @@ import { usePropertyList } from '../../../hooks/usePropertyList'
 import { BottomSheetModal } from '@gorhom/bottom-sheet'
 import FilterPanel from './components/FilterPanel'
 
-
-
 const Home = () => {
-
-  const [currentPType, setCurrentPType] = useState<PropertyType>('All');
-
+  const [currentPType, setCurrentPType] = useState<PropertyType>('All')
   const [checkedCities, setCheckedCities] = useState<{
     city: string,
     checked: boolean
   }[]>([])
-
   const [range, setRange] = useState({
     min: 0,
     max: 20000
   })
+  const [triggerFilter, setTriggerFilter] = useState(0)
+  const [focusRefresh, setFocusRefresh] = useState(0)
+  const bottomSheetModalRef = useRef<BottomSheetModal>(null)
 
-  const [triggerFilter, setTriggerFilter] = useState<number>(0)
+  useFocusEffect(
+    useCallback(() => {
+      setFocusRefresh(Date.now())
+    }, [])
+  )
 
   const trigger = () => {
-    setTriggerFilter(new Date().getTime())
-    bottomSheetModalRef.current?.dismiss();
+    setTriggerFilter(Date.now())
+    bottomSheetModalRef.current?.dismiss()
   }
 
-  const { properties, fetchNextBatch, fetching } = usePropertyList(currentPType, range, checkedCities, triggerFilter);
+  const { properties, fetchNextBatch, fetching } = usePropertyList(
+    currentPType,
+    range,
+    checkedCities,
+    triggerFilter + focusRefresh
+  )
 
-  const bottomSheetModalRef = useRef<BottomSheetModal>(null);
-
-  console.log("checkedCities", checkedCities)
-  console.log("range", range)
-
-  // callbacks
   const openFilterPanel = useCallback(() => {
-    bottomSheetModalRef.current?.present();
-  }, []);
+    bottomSheetModalRef.current?.present()
+  }, [])
 
   return (
     <View style={styles.homeContainer}>
       <LocationContainer />
       <SearchContainer openFilterPanel={openFilterPanel} />
-      <PropertyTypesList currentPType={currentPType} setCurrentPType={setCurrentPType} />
-      <View style={
-        {
-          flexDirection: 'row',
-          justifyContent: 'space-between'
-        }
-      }>
+      <PropertyTypesList
+        currentPType={currentPType}
+        setCurrentPType={setCurrentPType}
+      />
+      <View style={{
+        flexDirection: 'row',
+        justifyContent: 'space-between'
+      }}>
         <Text style={{
           fontSize: 24,
           fontWeight: '700'
@@ -67,7 +70,11 @@ const Home = () => {
           color: Colors.TEXT_GRAY
         }}>See all</Text>
       </View>
-      <PropertyList properties={properties} fetchNextBatch={fetchNextBatch} fetching={fetching} />
+      <PropertyList
+        properties={properties}
+        fetchNextBatch={fetchNextBatch}
+        fetching={fetching}
+      />
       <FilterPanel
         ref={bottomSheetModalRef}
         checkedCities={checkedCities}
